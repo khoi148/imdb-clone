@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Movie from "./components/Movie.js";
 
 export default function App() {
-  let [movies, setMovies] = useState(null);
+  let [movies, setMovies] = useState([]);
   let moment = require("moment");
 
   async function currentlyPlaying() {
@@ -21,18 +21,16 @@ export default function App() {
   }, []);
   return (
     <div className="App">
-      <div className="d-flex flex-wrap justify-content-center">
-        {movies !== null &&
+      <div className="row d-flex flex-wrap justify-content-center w-100 bg-warning">
+        {movies.length !== 0 &&
           movies.results.map((item, index) => {
             return (
               <Movie
-                img={movies !== null && item.poster_path}
-                title={movies !== null && item.title}
-                year={
-                  movies !== null && moment(item.release_date).format("YYYY")
-                }
-                rating={movies !== null && item.vote_average}
-                description={movies !== null && item.overview}
+                img={item.poster_path}
+                title={item.title}
+                year={moment(item.release_date).format("YYYY")}
+                rating={item.vote_average}
+                description={item.overview}
               />
             );
           })}
