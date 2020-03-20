@@ -1,27 +1,49 @@
-import React, { useEffect, useState, componentDidMount } from "react";
-import "./App.css";
+import React, { useEffect, useState } from "react";
+import "./css/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import Movie from "./components/Movie.js";
+import Pagination from "./components/Pagination.js";
 import { Nav, FormControl, Button } from "react-bootstrap";
 
 const APIKEY = "4196bd6ab6c4a09843227e9e8cab47a0";
 let keyword = "";
 let movieList = []; //keep original list
-
+let pageNum = 1;
 export default function App() {
   let [movies, setMovies] = useState([]);
-  let moment = require("moment");
+  let [totalPages, setTotalPages] = useState(0);
+  let moment = require("moment"); //moment.js api
 
-  async function currentlyPlaying() {
-    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US&page=1`;
+  async function switchPage(event) {
+    let value = event.target.value;
+
+    if (value === "next") pageNum += 1;
+    else if (value === "previous") pageNum -= 1;
+    else if (value === "next-5") pageNum += 5;
+    else if (value === "previous-5") pageNum -= 5;
+    else pageNum = parseInt(value);
+
+    if (pageNum < 1) pageNum = 1;
+    console.log(pageNum);
+    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US&page=${pageNum}`;
     let response = await fetch(url);
     let result = await response.json();
+    movieList = result.results;
+    setMovies(result.results);
+    return pageNum;
+  }
+  async function currentlyPlaying() {
+    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
+    let response = await fetch(url);
+    let result = await response.json();
+    setTotalPages(result.total_pages);
+    console.log(result.total_pages);
     movieList = result.results;
     setMovies(result.results);
     console.log(result);
   }
   function searchByKeyWord() {
-    console.log(keyword);
     if (keyword === "") {
       setMovies(movieList);
     } else {
@@ -37,22 +59,26 @@ export default function App() {
       //I use concat to make a copy, before sorting. This makes sure original is untouched
       //And is a work around to make sure the setState actually notices a change,rerenders
       movieList.concat().sort((item1, item2) => {
-        console.log(item1.popularity);
         return item2.popularity - item1.popularity;
       })
     );
   }
 
   useEffect(() => {
-    console.log("hi");
+    //similar to componentDidMount
     currentlyPlaying();
   }, []);
-
   return (
     <div className="App">
-      {console.log(movies)}
+      {console.log("parent reload")}
       <Nav>
-        test
+        {totalPages !== 0 && (
+          <Pagination
+            parentMethod={switchPage}
+            page={pageNum}
+            totalPages={totalPages}
+          />
+        )}
         <FormControl
           text="hi"
           placeholder="search"
@@ -66,6 +92,7 @@ export default function App() {
           movies.map((item, index) => {
             return (
               <Movie
+                className="example"
                 img={item.poster_path}
                 title={item.title}
                 year={moment(item.release_date).format("YYYY")}
