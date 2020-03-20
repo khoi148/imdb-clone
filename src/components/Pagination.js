@@ -50,11 +50,27 @@ export default class Pagination extends React.Component {
   //this.props.pages & totalPages
   render() {
     return (
-      <div>
-        <Button onClick={this.updatePagination} value="previous-5">
+      <div
+        id="pagination-id"
+        className="row bg-success w-75"
+        style={{ height: "50px" }}
+      >
+        <Button
+          className={`${
+            this.props.page <= 5 ? "d-none" : ""
+          } pagination-buttons col-md-1`}
+          onClick={this.updatePagination}
+          value="previous-5"
+        >
           Previous 5
         </Button>
-        <Button onClick={this.updatePagination} value="previous">
+        <Button
+          className={`${
+            this.props.page <= 1 ? "d-none" : ""
+          } pagination-buttons col-md-1`}
+          onClick={this.updatePagination}
+          value="previous"
+        >
           Previous
         </Button>
         {this.state.arrayOfPages.length !== 0 &&
@@ -63,7 +79,8 @@ export default class Pagination extends React.Component {
               <Button
                 className={`${
                   item == this.props.page ? "bg-success border-success" : ""
-                }`}
+                } pagination-buttons col-md-1`}
+                size="lg"
                 onClick={this.updatePagination}
                 value={item}
               >
@@ -71,13 +88,23 @@ export default class Pagination extends React.Component {
               </Button>
             );
           })}
-        <Button onClick={this.updatePagination} value="next">
+        <Button
+          className=".pagination-buttons col-md-1"
+          onClick={this.updatePagination}
+          value="next"
+        >
           Next
         </Button>
-        <Button onClick={this.updatePagination} value="next-5">
+        <Button
+          className="pagination-buttons col-md-1"
+          onClick={this.updatePagination}
+          value="next-5"
+        >
           Next 5
         </Button>
-        <span>You are on page: {this.props.page}</span>
+        <span className="col-md-3">
+          You are on page: {this.props.page} have fun lol
+        </span>
       </div>
     );
   }

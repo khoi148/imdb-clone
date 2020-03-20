@@ -71,7 +71,7 @@ export default function App() {
   return (
     <div className="App">
       {console.log("parent reload")}
-      <Nav>
+      <Nav className="bg-dark">
         {totalPages !== 0 && (
           <Pagination
             parentMethod={switchPage}
