@@ -26,7 +26,7 @@ export default function Movie(props) {
           <button
             onClick={() => setState(!state)}
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
           >
             Button with data-target
           </button>
