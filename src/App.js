@@ -4,17 +4,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Movie from "./components/Movie.js";
 import Pagination from "./components/Pagination.js";
+import Sources from "./components/Sources.js";
 import { Nav, FormControl, Button } from "react-bootstrap";
 
 const APIKEY = "4196bd6ab6c4a09843227e9e8cab47a0";
+let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
+//`https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2015,2016&api_key=${APIKEY}&language=en-US`;
 let keyword = "";
 let movieList = []; //keep original list
 let pageNum = 1;
+let category = "popular";
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
   let moment = require("moment"); //moment.js api
 
+  function switchCategory(event) {
+    pageNum = 1;
+    category = event.target.value;
+    let urlBeginner = `https://api.themoviedb.org/3/movie/`;
+    let urlFinisher = `?api_key=${APIKEY}&language=en-US`;
+    url = urlBeginner + event.target.value + urlFinisher;
+    currentlyPlaying();
+
+    //?api_key=${APIKEY}&language=en-US`
+  }
   async function switchPage(event) {
     let value = event.target.value;
 
@@ -25,18 +39,21 @@ export default function App() {
     else pageNum = parseInt(value);
 
     if (pageNum < 1) pageNum = 1;
+    if (pageNum > totalPages) pageNum = totalPages;
     console.log(pageNum);
-    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US&page=${pageNum}`;
-    let response = await fetch(url);
+    let url2 = url + `&page=${pageNum}`;
+    let response = await fetch(url2);
     let result = await response.json();
     movieList = result.results;
     setMovies(result.results);
     return pageNum;
   }
   async function currentlyPlaying() {
-    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
+    //`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
     let response = await fetch(url);
     let result = await response.json();
+    console.log(result);
+
     setTotalPages(result.total_pages);
     console.log(result.total_pages);
     movieList = result.results;
@@ -79,6 +96,7 @@ export default function App() {
             totalPages={totalPages}
           />
         )}
+        <Sources parentMethod={switchCategory} category={category} />
         <FormControl
           text="hi"
           placeholder="search"

@@ -52,12 +52,12 @@ export default class Pagination extends React.Component {
     return (
       <div
         id="pagination-id"
-        className="row bg-success w-75"
+        className="row bg-dark w-100 m-0"
         style={{ height: "50px" }}
       >
         <Button
           className={`${
-            this.props.page <= 5 ? "d-none" : ""
+            this.props.page <= 5 ? "myHidden" : ""
           } pagination-buttons col-md-1`}
           onClick={this.updatePagination}
           value="previous-5"
@@ -66,7 +66,7 @@ export default class Pagination extends React.Component {
         </Button>
         <Button
           className={`${
-            this.props.page <= 1 ? "d-none" : ""
+            this.props.page <= 1 ? "myHidden" : ""
           } pagination-buttons col-md-1`}
           onClick={this.updatePagination}
           value="previous"
@@ -78,7 +78,7 @@ export default class Pagination extends React.Component {
             return (
               <Button
                 className={`${
-                  item == this.props.page ? "bg-success border-success" : ""
+                  item === this.props.page ? "bg-success border-success" : ""
                 } pagination-buttons col-md-1`}
                 size="lg"
                 onClick={this.updatePagination}
@@ -102,8 +102,8 @@ export default class Pagination extends React.Component {
         >
           Next 5
         </Button>
-        <span className="col-md-3">
-          You are on page: {this.props.page} have fun lol
+        <span className="col-md-3 text-light" style={{ fontSize: "24px" }}>
+          You are on page: {this.props.page}
         </span>
       </div>
     );

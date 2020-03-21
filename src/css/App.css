@@ -1,5 +1,5 @@
 body {
-  padding-top: 100px;
+  padding: 100px 0;
 }
 .example-enter {
   opacity: 0.01;
@@ -13,4 +13,8 @@ body {
 }
 
 .pagination-buttons {
+}
+
+.myHidden {
+  visibility: hidden !important;
 }
