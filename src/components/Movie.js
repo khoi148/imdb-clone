@@ -8,7 +8,6 @@ import {
   Collapse
 } from "react-bootstrap";
 
-let boolean = true;
 //for images from imdb, there sizes come in: "w92", "w154", "w185", "w342", "w500", "w780", or "original";
 export default class Movie extends React.Component {
   constructor() {

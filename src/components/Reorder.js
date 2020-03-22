@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Nav, FormControl, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export default class Reorder extends Component {
   constructor() {

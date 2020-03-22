@@ -9,7 +9,7 @@ export default class Pagination extends React.Component {
     };
   }
   updatePagination = event => {
-    let currentNum = this.props.parentMethod(event); //gets the id, to indicate to the parent what page to go to
+    this.props.parentMethod(event); //gets the id, to indicate to the parent what page to go to
     // currentNum gets us the next page number
   };
   setButtons = () => {

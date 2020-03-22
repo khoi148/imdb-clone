@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./css/App.css";
+import "react-input-range/lib/css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Movie from "./components/Movie.js";
@@ -7,8 +8,9 @@ import Pagination from "./components/Pagination.js";
 import Sources from "./components/Sources.js";
 import Search from "./components/Search.js";
 import Reorder from "./components/Reorder.js";
-import { Nav, FormControl, Button } from "react-bootstrap";
+import { Nav, Button, Form } from "react-bootstrap";
 import { sortByMethod } from "./util.js";
+import InputRange from "react-input-range";
 
 const APIKEY = "4196bd6ab6c4a09843227e9e8cab47a0";
 let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&include_adult=false&language=en-US`;
@@ -21,6 +23,8 @@ let category = "popular";
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
+  let [value, setValue] = useState(1);
+  let [value2, setValue2] = useState(1);
   let moment = require("moment"); //moment.js api
 
   function switchCategory(event) {
@@ -78,7 +82,7 @@ export default function App() {
   return (
     <div className="App">
       {console.log("parent reload")}
-      <Nav className="bg-dark">
+      <div id="movieOptions" className="bg-dark">
         {totalPages !== 0 && (
           <Pagination
             parentMethod={switchPage}
@@ -89,7 +93,32 @@ export default function App() {
         <Sources parentMethod={switchCategory} category={category} />
         <Search parentMethod={searchByKeyWord} />
         <Reorder parentMethod={sortByValue} />
-      </Nav>
+        <div className="bg-light p-5">
+          <Form className="d-flex flex-column">
+            <div>
+              <label>Year: </label>
+              <InputRange
+                maxValue={20}
+                minValue={0}
+                value={value}
+                onChange={value => setValue(value)}
+                onChangeComplete={value => console.log(value)}
+              />
+            </div>
+            <br></br>
+            <div>
+              <label>Rating: </label>
+              <InputRange
+                maxValue={20}
+                minValue={0}
+                value={value2}
+                onChange={value => setValue2(value)}
+                onChangeComplete={value => console.log(value)}
+              />
+            </div>
+          </Form>
+        </div>
+      </div>
       <div className="row d-flex flex-wrap justify-content-center w-100 bg-warning">
         {movies.length !== 0 &&
           movies.map((item, index) => {
