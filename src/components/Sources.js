@@ -8,7 +8,7 @@ export default class Sources extends Component {
 
   render() {
     return (
-      <div className="d-flex mx-0 row w-100 bg-warning justify-content-center">
+      <div className="d-flex mx-0 row w-100 bg-dark justify-content-center">
         <Button
           className="col-md-1"
           onClick={this.myCallback}
@@ -37,7 +37,9 @@ export default class Sources extends Component {
         >
           Upcoming
         </Button>
-        <span>You are on {this.props.category}</span>
+        <span className="text-light ml-2" style={{ fontSize: "24px" }}>
+          You are on {this.props.category}
+        </span>
       </div>
     );
   }

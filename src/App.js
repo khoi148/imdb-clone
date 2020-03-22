@@ -5,15 +5,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Movie from "./components/Movie.js";
 import Pagination from "./components/Pagination.js";
 import Sources from "./components/Sources.js";
+import Search from "./components/Search.js";
+import Reorder from "./components/Reorder.js";
 import { Nav, FormControl, Button } from "react-bootstrap";
+import { sortByMethod } from "./util.js";
 
 const APIKEY = "4196bd6ab6c4a09843227e9e8cab47a0";
-let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
-//`https://api.themoviedb.org/3/discover/movie?with_genres=18&primary_release_year=2015,2016&api_key=${APIKEY}&language=en-US`;
-let keyword = "";
+let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&include_adult=false&language=en-US`;
+
+let urlFinisher = `api_key=${APIKEY}&language=en-US&include_adult=false`;
 let movieList = []; //keep original list
 let pageNum = 1;
 let category = "popular";
+
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
@@ -21,10 +25,9 @@ export default function App() {
 
   function switchCategory(event) {
     pageNum = 1;
-    category = event.target.value;
+    category = event.target.value; //includes values like 'popular, top_rated, upcoming, now_playing
     let urlBeginner = `https://api.themoviedb.org/3/movie/`;
-    let urlFinisher = `?api_key=${APIKEY}&language=en-US`;
-    url = urlBeginner + event.target.value + urlFinisher;
+    url = urlBeginner + event.target.value + "?" + urlFinisher;
     currentlyPlaying();
 
     //?api_key=${APIKEY}&language=en-US`
@@ -40,49 +43,36 @@ export default function App() {
 
     if (pageNum < 1) pageNum = 1;
     if (pageNum > totalPages) pageNum = totalPages;
-    console.log(pageNum);
-    let url2 = url + `&page=${pageNum}`;
-    let response = await fetch(url2);
-    let result = await response.json();
-    movieList = result.results;
-    setMovies(result.results);
-    return pageNum;
+    url = url + `&page=${pageNum}`;
+    currentlyPlaying();
+    return pageNum; //tells child component which page we are on
   }
   async function currentlyPlaying() {
-    //`https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&language=en-US`;
+    //api call based on current url params
     let response = await fetch(url);
     let result = await response.json();
-    console.log(result);
-
+    console.log(url);
     setTotalPages(result.total_pages);
-    console.log(result.total_pages);
     movieList = result.results;
     setMovies(result.results);
     console.log(result);
   }
-  function searchByKeyWord() {
+  function searchByKeyWord(keyword) {
     if (keyword === "") {
       setMovies(movieList);
     } else {
-      setMovies(
-        movieList.filter(item =>
-          item.title.toLowerCase().includes(keyword.toLowerCase())
-        )
-      );
+      let urlBeginner = `https://api.themoviedb.org/3/search/movie?query=${keyword}&`;
+      url = urlBeginner + urlFinisher;
+      currentlyPlaying();
     }
   }
-  function sortByPopularity() {
-    setMovies(
-      //I use concat to make a copy, before sorting. This makes sure original is untouched
-      //And is a work around to make sure the setState actually notices a change,rerenders
-      movieList.concat().sort((item1, item2) => {
-        return item2.popularity - item1.popularity;
-      })
-    );
+  function sortByValue(event) {
+    // let sortBy = event.target.value;
+    let sortedArray = sortByMethod(event.target.value, movieList);
+    setMovies(sortedArray);
   }
 
   useEffect(() => {
-    //similar to componentDidMount
     currentlyPlaying();
   }, []);
   return (
@@ -97,13 +87,8 @@ export default function App() {
           />
         )}
         <Sources parentMethod={switchCategory} category={category} />
-        <FormControl
-          text="hi"
-          placeholder="search"
-          onChange={e => (keyword = e.target.value)}
-        />
-        <Button onClick={() => searchByKeyWord()}>Search</Button>
-        <Button onClick={() => sortByPopularity()}>Popular</Button>
+        <Search parentMethod={searchByKeyWord} />
+        <Reorder parentMethod={sortByValue} />
       </Nav>
       <div className="row d-flex flex-wrap justify-content-center w-100 bg-warning">
         {movies.length !== 0 &&
@@ -116,6 +101,7 @@ export default function App() {
                 year={moment(item.release_date).format("YYYY")}
                 rating={item.vote_average}
                 description={item.overview}
+                popularity={item.popularity}
               />
             );
           })}

@@ -89,21 +89,28 @@ export default class Pagination extends React.Component {
             );
           })}
         <Button
-          className=".pagination-buttons col-md-1"
+          className={`${
+            this.props.page >= this.props.totalPages ? "myHidden" : ""
+          } .pagination-buttons col-md-1`}
           onClick={this.updatePagination}
           value="next"
         >
           Next
         </Button>
         <Button
-          className="pagination-buttons col-md-1"
+          className={`${
+            this.props.page >=
+            1 + this.props.totalPages - (this.props.totalPages % 5)
+              ? "myHidden"
+              : ""
+          } .pagination-buttons col-md-1`}
           onClick={this.updatePagination}
           value="next-5"
         >
           Next 5
         </Button>
         <span className="col-md-3 text-light" style={{ fontSize: "24px" }}>
-          You are on page: {this.props.page}
+          You are on page: {this.props.page} out of {this.props.totalPages}
         </span>
       </div>
     );

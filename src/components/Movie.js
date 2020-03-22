@@ -7,8 +7,6 @@ import {
   Button,
   Collapse
 } from "react-bootstrap";
-import "../css/App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 let boolean = true;
 //for images from imdb, there sizes come in: "w92", "w154", "w185", "w342", "w500", "w780", or "original";
@@ -59,6 +57,7 @@ export default class Movie extends React.Component {
                 <Collapse in={this.state.state}>
                   <div>
                     <Card.Title>Rating: {this.props.rating}</Card.Title>
+                    <Card.Title>Popularity: {this.props.popularity}</Card.Title>
                     <Card.Text>{this.props.description}</Card.Text>
                   </div>
                 </Collapse>
