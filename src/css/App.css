@@ -1,5 +1,24 @@
+@import url(//db.onlinewebfonts.com/c/a041a19407d5c703ba772f17c84fc27c?family=Cinema+Gothic+NBP);
+@font-face {
+  font-family: "Cinema_Gothic_NBP";
+  src: url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot");
+  src: url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.svg#Cinema Gothic NBP")
+      format("svg");
+}
+
+* {
+  font-family: Cinema_Gothic_NBP !important;
+}
 body {
-  padding: 100px 0;
+  padding-bottom: 40px;
 }
 .example-enter {
   opacity: 0.01;
@@ -17,4 +36,15 @@ body {
 
 .myHidden {
   visibility: hidden !important;
+}
+
+.styledButtons {
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 18px !important;
+  /* height: 50px; */
+}
+.styledButtons:hover {
+  background-color: white !important;
+  color: black !important;
 }

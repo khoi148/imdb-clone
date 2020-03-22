@@ -4,17 +4,21 @@ import { FormControl, Button } from "react-bootstrap";
 export default class Search extends Component {
   render() {
     return (
-      <div className="d-flex w-100 m-0 justify-content-center">
-        <FormControl className="w-25" placeholder="search" id="formControl1" />
+      <div className="d-flex flex-row-reverse w-100 m-0 py-2">
         <Button
+          className="ml-2 mr-3 styledButtons"
           onClick={() =>
-            this.props.parentMethod(
-              document.getElementById("formControl1").value
-            )
+            this.props.parentMethod(document.getElementById("searchBar").value)
           }
         >
           Search!
         </Button>
+        <FormControl
+          className="w-50 border-bottom border-light rounded-0"
+          placeholder="search"
+          id="searchBar"
+          style={{ background: "transparent", border: "none", color: "white" }}
+        />
       </div>
     );
   }

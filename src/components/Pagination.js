@@ -26,9 +26,6 @@ export default class Pagination extends React.Component {
     return array;
   };
 
-  componentWillMount() {
-    // this.setState({ page: this.props.page });
-  }
   componentDidMount() {
     this.setState({ arrayOfPages: this.setButtons() });
   }
@@ -40,7 +37,6 @@ export default class Pagination extends React.Component {
       nextProps.page > this.state.arrayOfPages[4] ||
       nextProps.page < this.state.arrayOfPages[0]
     ) {
-      console.log(nextProps.page);
       this.setState({
         arrayOfPages: this.setButtons()
       });
@@ -52,66 +48,72 @@ export default class Pagination extends React.Component {
     return (
       <div
         id="pagination-id"
-        className="row bg-dark w-100 m-0"
-        style={{ height: "50px" }}
+        className="row bg-dark w-100 m-0 p-3"
+        style={{ height: "100px" }}
       >
-        <Button
-          className={`${
-            this.props.page <= 5 ? "myHidden" : ""
-          } pagination-buttons col-md-1`}
-          onClick={this.updatePagination}
-          value="previous-5"
-        >
-          Previous 5
-        </Button>
-        <Button
-          className={`${
-            this.props.page <= 1 ? "myHidden" : ""
-          } pagination-buttons col-md-1`}
-          onClick={this.updatePagination}
-          value="previous"
-        >
-          Previous
-        </Button>
-        {this.state.arrayOfPages.length !== 0 &&
-          this.state.arrayOfPages.map((item, index) => {
-            return (
-              <Button
-                className={`${
-                  item === this.props.page ? "bg-success border-success" : ""
-                } pagination-buttons col-md-1`}
-                size="lg"
-                onClick={this.updatePagination}
-                value={item}
-              >
-                {item}
-              </Button>
-            );
-          })}
-        <Button
-          className={`${
-            this.props.page >= this.props.totalPages ? "myHidden" : ""
-          } .pagination-buttons col-md-1`}
-          onClick={this.updatePagination}
-          value="next"
-        >
-          Next
-        </Button>
-        <Button
-          className={`${
-            this.props.page >=
-            1 + this.props.totalPages - (this.props.totalPages % 5)
-              ? "myHidden"
-              : ""
-          } .pagination-buttons col-md-1`}
-          onClick={this.updatePagination}
-          value="next-5"
-        >
-          Next 5
-        </Button>
-        <span className="col-md-3 text-light" style={{ fontSize: "24px" }}>
-          You are on page: {this.props.page} out of {this.props.totalPages}
-        </span>
+        <div className="row w-100">
+          <span className="text-light m-auto" style={{ fontSize: "24px" }}>
+            You are on page: {this.props.page} out of {this.props.totalPages}
+          </span>
+        </div>
+        <div className="d-flex w-100 bg-dark">
+          <Button
+            className={`${
+              this.props.page <= 5 ? "myHidden" : ""
+            } pagination-buttons styledButtons flex-grow-1`}
+            onClick={this.updatePagination}
+            value="previous-5"
+          >
+            Previous 5
+          </Button>
+          <Button
+            className={`${
+              this.props.page <= 1 ? "myHidden" : ""
+            } pagination-buttons styledButtons flex-grow-1`}
+            onClick={this.updatePagination}
+            value="previous"
+          >
+            Previous
+          </Button>
+          {this.state.arrayOfPages.length !== 0 &&
+            this.state.arrayOfPages.map((item, index) => {
+              return (
+                <Button
+                  className={`${
+                    item === this.props.page
+                      ? "bg-light border-light text-dark"
+                      : ""
+                  } pagination-buttons styledButtons flex-grow-1`}
+                  size="lg"
+                  onClick={this.updatePagination}
+                  value={item}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          <Button
+            className={`${
+              this.props.page >= this.props.totalPages ? "myHidden" : ""
+            } .pagination-buttons styledButtons flex-grow-1`}
+            onClick={this.updatePagination}
+            value="next"
+          >
+            Next
+          </Button>
+          <Button
+            className={`${
+              this.props.page >=
+              1 + this.props.totalPages - (this.props.totalPages % 5)
+                ? "myHidden"
+                : ""
+            } .pagination-buttons styledButtons flex-grow-1`}
+            onClick={this.updatePagination}
+            value="next-5"
+          >
+            Next 5
+          </Button>
+        </div>
       </div>
     );
   }

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./css/App.css";
-import "react-input-range/lib/css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import logo from "./Logo-IMDB.png";
 
 import Movie from "./components/Movie.js";
 import Pagination from "./components/Pagination.js";
 import Sources from "./components/Sources.js";
 import Search from "./components/Search.js";
 import Reorder from "./components/Reorder.js";
-import { Nav, Button, Form } from "react-bootstrap";
 import { sortByMethod } from "./util.js";
-import InputRange from "react-input-range";
 
 const APIKEY = "4196bd6ab6c4a09843227e9e8cab47a0";
 let url = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKEY}&include_adult=false&language=en-US`;
@@ -23,8 +21,6 @@ let category = "popular";
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
-  let [value, setValue] = useState(1);
-  let [value2, setValue2] = useState(1);
   let moment = require("moment"); //moment.js api
 
   function switchCategory(event) {
@@ -33,8 +29,6 @@ export default function App() {
     let urlBeginner = `https://api.themoviedb.org/3/movie/`;
     url = urlBeginner + event.target.value + "?" + urlFinisher;
     currentlyPlaying();
-
-    //?api_key=${APIKEY}&language=en-US`
   }
   async function switchPage(event) {
     let value = event.target.value;
@@ -55,7 +49,6 @@ export default function App() {
     //api call based on current url params
     let response = await fetch(url);
     let result = await response.json();
-    console.log(url);
     setTotalPages(result.total_pages);
     movieList = result.results;
     setMovies(result.results);
@@ -79,62 +72,55 @@ export default function App() {
   useEffect(() => {
     currentlyPlaying();
   }, []);
+
   return (
     <div className="App">
+      <div className="d-flex justify-content-center w-100 bg-dark">
+        <img
+          className=""
+          src={logo}
+          alt="logo"
+          height="350"
+          width={document.body.clientWidth / 2}
+        />
+      </div>
       {console.log("parent reload")}
       <div id="movieOptions" className="bg-dark">
-        {totalPages !== 0 && (
-          <Pagination
-            parentMethod={switchPage}
-            page={pageNum}
-            totalPages={totalPages}
-          />
-        )}
-        <Sources parentMethod={switchCategory} category={category} />
         <Search parentMethod={searchByKeyWord} />
-        <Reorder parentMethod={sortByValue} />
-        <div className="bg-light p-5">
-          <Form className="d-flex flex-column">
-            <div>
-              <label>Year: </label>
-              <InputRange
-                maxValue={20}
-                minValue={0}
-                value={value}
-                onChange={value => setValue(value)}
-                onChangeComplete={value => console.log(value)}
-              />
-            </div>
-            <br></br>
-            <div>
-              <label>Rating: </label>
-              <InputRange
-                maxValue={20}
-                minValue={0}
-                value={value2}
-                onChange={value => setValue2(value)}
-                onChangeComplete={value => console.log(value)}
-              />
-            </div>
-          </Form>
+      </div>
+
+      <div className="row d-flex flex-wrap justify-content-center w-100 mx-0 my-2">
+        <div className="col-md-4 bg-light pt-2">
+          <Sources parentMethod={switchCategory} category={category} />
+          <br></br>
+          <Reorder parentMethod={sortByValue} />
+        </div>
+        <div className="col-md-8 m-0 bg-light">
+          {movies !== undefined &&
+            movies.length !== 0 &&
+            movies.map((item, index) => {
+              return (
+                <Movie
+                  className="example"
+                  img={item.poster_path}
+                  title={item.title}
+                  year={moment(item.release_date).format("YYYY")}
+                  rating={item.vote_average}
+                  description={item.overview}
+                  popularity={item.popularity}
+                  releaseDate={item.release_date}
+                />
+              );
+            })}
         </div>
       </div>
-      <div className="row d-flex flex-wrap justify-content-center w-100 bg-warning">
-        {movies.length !== 0 &&
-          movies.map((item, index) => {
-            return (
-              <Movie
-                className="example"
-                img={item.poster_path}
-                title={item.title}
-                year={moment(item.release_date).format("YYYY")}
-                rating={item.vote_average}
-                description={item.overview}
-                popularity={item.popularity}
-              />
-            );
-          })}
-      </div>
+      {totalPages !== 0 && (
+        <Pagination
+          parentMethod={switchPage}
+          page={pageNum}
+          totalPages={totalPages}
+        />
+      )}
     </div>
   );
 }
