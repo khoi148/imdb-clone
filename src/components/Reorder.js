@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import "react-input-range/lib/css/index.css";
 
+//TODO: note fontawesome icons not showing up. bug
 export default class Reorder extends Component {
   constructor() {
     super();
