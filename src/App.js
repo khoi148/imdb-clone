@@ -23,8 +23,8 @@ let category = "popular";
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
-  let [toggleModal, setToggleModal] = useState(true);
-  let [modalVideoID, setModalVideoId] = useState(0);
+  let [toggleModal, setToggleModal] = useState(false);
+  let [modalVideoID, setModalVideoId] = useState('');
   let moment = require("moment"); //moment.js api
 
   function switchCategory(event) {
@@ -73,12 +73,12 @@ export default function App() {
     setMovies(sortedArray);
   }
 
-  async function toggleModalMethod(movie_id = 570670) {
+  async function toggleModalMethod(movie_id) {
     // let movie_id = 570670;
-    // let urlVid = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${APIKEY}&language=en-US`;
-    // let response = await fetch(urlVid);
-    // let result = await response.json();
-    setModalVideoId(movie_id);
+    let urlVid = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${APIKEY}&language=en-US`;
+    let response = await fetch(urlVid);
+    let result = await response.json();
+    setModalVideoId(result.results[0].key);
     setToggleModal(true);
   }
 
@@ -107,9 +107,10 @@ export default function App() {
           <Sources parentMethod={switchCategory} category={category} />
           <br></br>
           <Reorder parentMethod={sortByValue} />
-          <button onClick={toggleModalMethod}>Open Modal</button>
+          {/* <button onClick={toggleModalMethod}>Open Modal</button> why you put Modal here dude? */}
         </div>
         <ReactModal
+          closeTimeoutMS={1500}
           isOpen={toggleModal}
           onRequestClose={() => setToggleModal(false)}
           style={{
