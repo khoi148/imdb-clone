@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./css/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "./Logo-IMDB.png";
+import ReactModal from "react-modal";
+import YouTube from "@u-wave/react-youtube";
 
 import Movie from "./components/Movie.js";
 import Pagination from "./components/Pagination.js";
@@ -21,6 +23,8 @@ let category = "popular";
 export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
+  let [toggleModal, setToggleModal] = useState(true);
+  let [modalVideoID, setModalVideoId] = useState(0);
   let moment = require("moment"); //moment.js api
 
   function switchCategory(event) {
@@ -69,6 +73,15 @@ export default function App() {
     setMovies(sortedArray);
   }
 
+  async function toggleModalMethod(movie_id = 570670) {
+    // let movie_id = 570670;
+    // let urlVid = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${APIKEY}&language=en-US`;
+    // let response = await fetch(urlVid);
+    // let result = await response.json();
+    setModalVideoId(movie_id);
+    setToggleModal(true);
+  }
+
   useEffect(() => {
     currentlyPlaying();
   }, []);
@@ -94,7 +107,21 @@ export default function App() {
           <Sources parentMethod={switchCategory} category={category} />
           <br></br>
           <Reorder parentMethod={sortByValue} />
+          <button onClick={toggleModalMethod}>Open Modal</button>
         </div>
+        <ReactModal
+          isOpen={toggleModal}
+          onRequestClose={() => setToggleModal(false)}
+          style={{
+            overlay: {
+              display: "flex",
+              justifyContent: "center"
+            },
+            contents: { width: "70%", height: "70%" }
+          }}
+        >
+          <YouTube video={modalVideoID} height="100%" width="100%" autoplay />
+        </ReactModal>
         <div className="col-md-8 m-0 bg-light">
           {movies !== undefined &&
             movies.length !== 0 &&
@@ -109,6 +136,8 @@ export default function App() {
                   description={item.overview}
                   popularity={item.popularity}
                   releaseDate={item.release_date}
+                  parentMethod={toggleModalMethod}
+                  itemId={item.id}
                 />
               );
             })}

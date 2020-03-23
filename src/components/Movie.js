@@ -9,6 +9,10 @@ export default class Movie extends React.Component {
       onLoad: false
     };
   }
+  myCallback = event => {
+    console.log("opening");
+    this.props.parentMethod(this.props.itemId);
+  };
 
   componentDidMount() {
     this.setState({ onLoad: !this.state.onLoad });
@@ -31,6 +35,7 @@ export default class Movie extends React.Component {
             <Card.Text className="pr-3 pt-2">
               {this.props.description}
             </Card.Text>
+            <button onClick={() => this.myCallback()}>Open Modal</button>
             <button
               onClick={() => this.setState({ state: !this.state.state })}
               type="button"
