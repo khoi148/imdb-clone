@@ -79,11 +79,11 @@ export default class Pagination extends React.Component {
             this.state.arrayOfPages.map((item, index) => {
               return (
                 <Button
-                  className={`styledButtons ${
+                  className={`${
                     item === this.props.page
                       ? "bg-light border-light text-dark"
                       : ""
-                  } pagination-buttons flex-grow-1`}
+                  } pagination-buttons styledButtons flex-grow-1`}
                   size="lg"
                   onClick={this.updatePagination}
                   value={item}
