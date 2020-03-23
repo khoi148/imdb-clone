@@ -46,7 +46,7 @@ export default class Reorder extends Component {
             onClick={this.myCallback}
             value="lowest_rated"
           >
-            Least Rated!
+            Least Rated
           </Button>
         </div>
       </div>
