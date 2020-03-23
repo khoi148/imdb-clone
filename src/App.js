@@ -24,7 +24,7 @@ export default function App() {
   let [movies, setMovies] = useState([]);
   let [totalPages, setTotalPages] = useState(0);
   let [toggleModal, setToggleModal] = useState(false);
-  let [modalVideoID, setModalVideoId] = useState('');
+  let [modalVideoID, setModalVideoId] = useState("");
   let moment = require("moment"); //moment.js api
 
   function switchCategory(event) {
@@ -78,7 +78,8 @@ export default function App() {
     let urlVid = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${APIKEY}&language=en-US`;
     let response = await fetch(urlVid);
     let result = await response.json();
-    setModalVideoId(result.results[0].key);
+    if (result.results.length !== 0) setModalVideoId(result.results[0].key);
+    else setModalVideoId(null);
     setToggleModal(true);
   }
 
@@ -107,7 +108,6 @@ export default function App() {
           <Sources parentMethod={switchCategory} category={category} />
           <br></br>
           <Reorder parentMethod={sortByValue} />
-          {/* <button onClick={toggleModalMethod}>Open Modal</button> why you put Modal here dude? */}
         </div>
         <ReactModal
           closeTimeoutMS={1500}
@@ -118,10 +118,14 @@ export default function App() {
               display: "flex",
               justifyContent: "center"
             },
-            contents: { width: "70%", height: "70%" }
+            contents: { width: "40%", height: "40%" }
           }}
         >
-          <YouTube video={modalVideoID} height="100%" width="100%" autoplay />
+          {modalVideoID === null || modalVideoID === undefined ? (
+            "Video not Found"
+          ) : (
+            <YouTube video={modalVideoID} height="100%" width="100%" autoplay />
+          )}
         </ReactModal>
         <div className="col-md-8 m-0 bg-light">
           {movies !== undefined &&

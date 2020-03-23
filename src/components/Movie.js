@@ -23,6 +23,7 @@ export default class Movie extends React.Component {
       <div className="bg-info my-2 border border-secondary rounded shadow-lg">
         <div className="row " style={{}}>
           <Card.Img
+            onClick={() => this.myCallback(this.props.movie_id)}
             className="img-fluid col-md-4"
             style={{ height: "400px", width: "200px" }}
             variant="top"
@@ -35,7 +36,6 @@ export default class Movie extends React.Component {
             <Card.Text className="pr-3 pt-2">
               {this.props.description}
             </Card.Text>
-            <button onClick={() => this.myCallback(this.props.movie_id)}>Open Modal</button>
             <button
               onClick={() => this.setState({ state: !this.state.state })}
               type="button"

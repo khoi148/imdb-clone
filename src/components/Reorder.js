@@ -25,28 +25,28 @@ export default class Reorder extends Component {
             onClick={this.myCallback}
             value="most_popular"
           >
-            Most Popular <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            Most Popular
           </Button>
           <Button
             className="styledButtons"
             onClick={this.myCallback}
             value="least_popular"
           >
-            Least Popular <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            Least Popular
           </Button>
           <Button
             className="styledButtons"
             onClick={this.myCallback}
             value="highest_rated"
           >
-            Highest Rated <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            Highest Rated
           </Button>
           <Button
             className="styledButtons"
             onClick={this.myCallback}
             value="lowest_rated"
           >
-            Least Rated <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            Least Rated!
           </Button>
         </div>
       </div>
