@@ -15,14 +15,13 @@ export default class Pagination extends React.Component {
   setButtons = () => {
     let array = [];
     let upperLimit = 5 * Math.ceil(this.props.page / 5);
-    console.log(upperLimit);
     let base = upperLimit - 4;
     if (upperLimit > this.props.totalPages) upperLimit = this.props.totalPages;
-
+    if (base > this.props.totalPages) upperLimit = base;
+    console.log(upperLimit);
     for (let x = base; x <= upperLimit; x++) {
       array.push(x);
     }
-    console.log("setButtons x");
     return array;
   };
 
@@ -79,20 +78,22 @@ export default class Pagination extends React.Component {
             </Button>
             {this.state.arrayOfPages.length !== 0 &&
               this.state.arrayOfPages.map((item, index) => {
-                return (
-                  <Button
-                    className={`${
-                      item === this.props.page
-                        ? "bg-light border-light text-dark"
-                        : ""
-                    } pagination-buttons styledButtons flex-grow-1`}
-                    size="lg"
-                    onClick={this.updatePagination}
-                    value={item}
-                  >
-                    {item}
-                  </Button>
-                );
+                if (this.props.totalPages === 1 && index > 0) return "";
+                else
+                  return (
+                    <Button
+                      className={`${
+                        item === this.props.page
+                          ? "bg-light border-light text-dark"
+                          : ""
+                      } pagination-buttons styledButtons flex-grow-1`}
+                      size="lg"
+                      onClick={this.updatePagination}
+                      value={item}
+                    >
+                      {item}
+                    </Button>
+                  );
               })}
             <Button
               className={`${

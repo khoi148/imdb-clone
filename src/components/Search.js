@@ -14,10 +14,20 @@ export default class Search extends Component {
           Search!
         </Button>
         <FormControl
+          onKeyPress={event => {
+            if (event.key === "Enter")
+              this.props.parentMethod(
+                document.getElementById("searchBar").value
+              );
+          }}
           className="w-50 border-bottom border-light rounded-0"
           placeholder="search"
           id="searchBar"
-          style={{ background: "transparent", border: "none", color: "white" }}
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "white"
+          }}
         />
       </div>
     );
