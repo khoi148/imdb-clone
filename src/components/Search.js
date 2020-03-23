@@ -4,7 +4,7 @@ import { FormControl, Button } from "react-bootstrap";
 export default class Search extends Component {
   render() {
     return (
-      <div className="d-flex flex-row-reverse w-100 m-0 py-2">
+      <div className="d-flex flex-row-reverse w-100 m-0 py-3">
         <Button
           className="ml-2 mr-3 styledButtons"
           onClick={() =>

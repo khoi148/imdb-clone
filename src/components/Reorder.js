@@ -13,7 +13,7 @@ export default class Reorder extends Component {
   render() {
     return (
       <div className="m-0 p-3 bg-dark border border-light rounded">
-        <div className="row">
+        <div className="row mb-2">
           <span className="text-light m-auto" style={{ fontSize: "24px" }}>
             Show First
           </span>

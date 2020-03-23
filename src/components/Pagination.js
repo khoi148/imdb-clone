@@ -49,7 +49,7 @@ export default class Pagination extends React.Component {
       <div
         id="pagination-id"
         className="row bg-dark w-100 m-0 p-3"
-        style={{ height: "100px" }}
+        style={{ height: "150px" }}
       >
         <div className="col-md-6"></div>
         <div className="col-md-6">
@@ -58,7 +58,7 @@ export default class Pagination extends React.Component {
               You are on page: {this.props.page} out of {this.props.totalPages}
             </p>
           </div>
-          <div className="d-flex w-100 bg-dark pr-3">
+          <div className="d-flex w-100 bg-dark pr-3 m-auto">
             <Button
               className={`${
                 this.props.page <= 5 ? "myHidden" : ""
