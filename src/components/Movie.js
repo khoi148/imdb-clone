@@ -20,7 +20,7 @@ export default class Movie extends React.Component {
 
   render() {
     return (
-      <div className="bg-info my-2 border border-secondary rounded shadow-lg">
+      <div className="bg-light my-2 border border-secondary rounded shadow-lg">
         <div className="row " style={{}}>
           <Card.Img
             onClick={() => this.myCallback(this.props.movie_id)}

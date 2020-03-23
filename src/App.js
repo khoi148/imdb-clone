@@ -104,8 +104,8 @@ export default function App() {
         <Search parentMethod={searchByKeyWord} />
       </div>
 
-      <div className="row d-flex flex-wrap justify-content-center w-100 mx-0 my-2">
-        <div className="col-md-4 bg-light pt-2">
+      <div className="row d-flex flex-wrap justify-content-center w-100 mx-0 bg-dark">
+        <div className="col-md-4 pt-2">
           <Sources parentMethod={switchCategory} category={category} />
           <br></br>
           <Reorder parentMethod={sortByValue} />
@@ -128,7 +128,7 @@ export default function App() {
             <YouTube video={modalVideoID} height="100%" width="100%" autoplay />
           )}
         </ReactModal>
-        <div className="col-md-8 m-0 bg-light">
+        <div className="col-md-8 m-0">
           {movies !== undefined &&
             movies.length !== 0 &&
             movies.map((item, index) => {
