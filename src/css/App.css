@@ -1,16 +1,16 @@
-@import url(//db.onlinewebfonts.com/c/a041a19407d5c703ba772f17c84fc27c?family=Cinema+Gothic+NBP);
+@import url(https://db.onlinewebfonts.com/c/a041a19407d5c703ba772f17c84fc27c?family=Cinema+Gothic+NBP);
 @font-face {
   font-family: "Cinema_Gothic_NBP";
-  src: url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot");
-  src: url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot?#iefix")
+  src: url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot");
+  src: url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.eot?#iefix")
       format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff2")
+    url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff2")
       format("woff2"),
-    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff")
+    url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.woff")
       format("woff"),
-    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.ttf")
+    url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.ttf")
       format("truetype"),
-    url("//db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.svg#Cinema Gothic NBP")
+    url("https://db.onlinewebfonts.com/t/a041a19407d5c703ba772f17c84fc27c.svg#Cinema Gothic NBP")
       format("svg");
 }
 
@@ -54,10 +54,13 @@ body {
   transition: opacity 2000ms ease-in-out;
 }
 
-.ReactModal__Overlay--after-open{
+.ReactModal__Overlay--after-open {
   opacity: 1;
 }
 
-.ReactModal__Overlay--before-close{
+.ReactModal__Overlay--before-close {
   opacity: 0;
+}
+.bg-light {
+  background-color: white !important;
 }

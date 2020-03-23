@@ -59,6 +59,7 @@ export default function App() {
     console.log(result);
   }
   function searchByKeyWord(keyword) {
+    pageNum = 1;
     if (keyword === "") {
       setMovies(movieList);
     } else {
